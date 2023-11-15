@@ -18,7 +18,7 @@ const ReactionSchema = new Schema ({
     },
     createdAt: {
         type: Date,
-        default: Date,now,
+        default: Date.now,
         get() {
             return dayjs(createdAt).format('MM/DD/YYYY hh:mm:ss')
         }
@@ -43,7 +43,7 @@ const ThoughtSchema = new Schema ({
         type: String,
         required: true
     },
-    reactions: [reactionSchema],
+    reactions: [ReactionSchema],
 }, {
     toJSON: {virtuals: true},
 });

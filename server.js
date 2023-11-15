@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3333;
 
 app.use(express.json());
 
-app.use('/api', routes);
+app.use(routes);
 
 db.once('open', () => {
     console.log('db now connected');

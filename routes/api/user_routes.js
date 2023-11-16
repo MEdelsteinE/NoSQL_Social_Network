@@ -47,7 +47,8 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
-        res.json(user);
+        
+        res.json({message: 'User deleted!'});
     } catch (err) {
         res.status(500).json(err);
     }
@@ -67,13 +68,16 @@ router.post('/:userId/friends/:friendId', async (req, res) => {
 });
 
 router.delete('/:userId/friends/:friendId', async (req, res) => {
+    const { userId, friendId } = req.params;
     try {
-        const user = await User.findById(req.params.userId);  
-        const friend = await User.findById(req.params.friendId);
-        
+        const user = await User.findById(userId);
+        const friend = await User.findById(friendId); 
         user.friends.pull(friend);
-    } catch (error) {
+        await user.save();
 
+        res.json({message: 'Friend deleted succesfully'});
+    } catch (err) {
+        res.status(500).json(err);
     }
 });
 

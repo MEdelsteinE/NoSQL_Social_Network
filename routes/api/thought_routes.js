@@ -49,7 +49,8 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const thought = await Thought.findByIdAndDelete(req.params.id);
-        res.json(thought);
+        
+        res.json({message: 'Thought deleted!'});
     } catch (err) {
         res.status(500).json(err);
     }
@@ -66,12 +67,12 @@ router.post('/:thoughtId/reactions', async (req, res) => {
     }
 });
 
-router.delete('/:thoughtId/reactions/reactionId', async (req, res) => {
+router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
         try {
             const thought = await Thought.findById(req.params.thoughtId);
             thought.reactions.pull(req.params.reactionId);
             await thought.save();
-            res.json(thought);
+            res.json({message: 'Reaction deleted!'});
         } catch (err) {
             res.status(500).json(err);
         }
